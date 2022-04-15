@@ -107,11 +107,13 @@ class GenerateDocument:
         '''
         This method converts the image to gray scale.
         '''
-        grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        binI = cv2.threshold(grayImage, 170, 255, cv2.THRESH_BINARY)
-        adapI = cv2.adaptiveThreshold(grayImage, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 199, 15)
-        return np.array(cv2.addWeighted(src1=binI,alpha=0.7,src2=adapI,beta=0.3,gamma=0))
-
+        try:
+            grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            binI = cv2.threshold(grayImage, 170, 255, cv2.THRESH_BINARY)
+            adapI = cv2.adaptiveThreshold(grayImage, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 199, 15)
+            return np.array(cv2.addWeighted(src1=binI,alpha=0.7,src2=adapI,beta=0.3,gamma=0))
+        except:
+            raise Exception('Unsuccessful in color formation')
 
     def generate(self, image, colorProfile :int=0) -> np.ndarray:
         ''''''
@@ -139,7 +141,7 @@ class GenerateDocument:
         
         # gray scale
         elif colorProfile == 1:
-            return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            return cv2.cvtColor(outputImage, cv2.COLOR_BGR2GRAY)
         
         else:
             raise ValueError("colorProfile must be 'color', 'black_and_white' or 'gray'")
