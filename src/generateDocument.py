@@ -113,7 +113,7 @@ class GenerateDocument:
         return np.array(cv2.addWeighted(src1=binI,alpha=0.7,src2=adapI,beta=0.3,gamma=0))
 
 
-    def generate(self, image, colorProfile='color') -> np.ndarray:
+    def generate(self, image, colorProfile :int=0) -> np.ndarray:
         ''''''
         if type(image) != np.ndarray:
             raise TypeError("image must be a numpy array")
@@ -129,13 +129,16 @@ class GenerateDocument:
         modifiedContour = self.reorder(contour)
         outputImage = self.getTopView(image, modifiedContour)
         
-        if colorProfile == 'color':
+        # color
+        if colorProfile == 0:
             return cv2.cvtColor(outputImage, cv2.COLOR_BGR2RGB)
         
-        elif colorProfile == 'black_and_white':
+        # black and white
+        elif colorProfile == 2:
             return self.convertToBlackAndWhite(outputImage)
         
-        elif colorProfile == 'gray':
+        # gray scale
+        elif colorProfile == 1:
             return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         else:
