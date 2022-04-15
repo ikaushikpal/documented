@@ -78,11 +78,15 @@ class GenerateDocument:
 
         return modifiedContour
 
-    def getTopView(self, image, biggestContour):
+    def getTopView(self, image, contour):
         '''
-        
+        Fetches top top got from biggest contour
+
+        @parameter
+            image: numpy.ndarray
+            contour: numpy.ndarray
         '''
-        pts1 = np.float32(biggestContour)
+        pts1 = np.float32(contour)
         pts2 = np.float32(
             [[0, 0],
              [GenerateDocument.IMAGE_WIDTH, 0],
